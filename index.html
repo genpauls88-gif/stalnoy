@@ -17,6 +17,39 @@
   @media(max-width:900px){.brand-mark{width:105px!important;height:105px!important}}
   @media(max-width:620px){.brand-mark{width:82px!important;height:82px!important}}
 </style>
+
+<style>
+  /* Portfolio: four equal cards per row + image zoom on hover */
+  .gallery{
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    gap:18px !important;
+  }
+  .gallery .project,
+  .gallery .project.wide{
+    grid-column:auto !important;
+    width:100% !important;
+    aspect-ratio:4 / 3 !important;
+    overflow:hidden !important;
+    position:relative !important;
+  }
+  .gallery .project img{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    transition:transform .45s cubic-bezier(.2,.7,.2,1) !important;
+    will-change:transform;
+  }
+  .gallery .project:hover img{
+    transform:scale(1.8) !important;
+  }
+  @media (max-width:1000px){
+    .gallery{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+  }
+  @media (max-width:620px){
+    .gallery{grid-template-columns:1fr !important;}
+  }
+</style>
 </head>
 <body>
 <header class="header" id="top">
