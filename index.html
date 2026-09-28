@@ -19,37 +19,22 @@
 </style>
 
 <style>
-  /* Portfolio: four equal cards per row + image zoom on hover */
-  .gallery{
-    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-    gap:18px !important;
+@media (max-width:620px){
+  .hero h1{
+    font-size:43px !important;
+    line-height:.92 !important;
+    letter-spacing:-.035em !important;
   }
-  .gallery .project,
-  .gallery .project.wide{
-    grid-column:auto !important;
-    width:100% !important;
-    aspect-ratio:4 / 3 !important;
-    overflow:hidden !important;
-    position:relative !important;
-  }
-  .gallery .project img{
+  .hero h1 em{
     display:block !important;
-    width:100% !important;
-    height:100% !important;
-    object-fit:cover !important;
-    transition:transform .45s cubic-bezier(.2,.7,.2,1) !important;
-    will-change:transform;
+    font-size:29px !important;
+    line-height:1 !important;
+    letter-spacing:-.045em !important;
+    white-space:nowrap !important;
   }
-  .gallery .project:hover img{
-    transform:scale(1.1) !important;
-  }
-  @media (max-width:1000px){
-    .gallery{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
-  }
-  @media (max-width:620px){
-    .gallery{grid-template-columns:1fr !important;}
-  }
+}
 </style>
+
 </head>
 <body>
 <header class="header" id="top">
@@ -234,7 +219,7 @@
     <div class="section-head">
       <div>
         <div class="eyebrow"><span></span> ПРОЦЕСС</div>
-        <h2>От задачи до <em>реализации</em></h2>
+        <h2>От задачи<br>до <em>реализации</em></h2>
       </div>
       </div>
     <div class="process-grid">
