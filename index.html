@@ -94,6 +94,41 @@
 }
 </style>
 
+
+<style>
+  /* Request form */
+  .request-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(5,7,8,.82);backdrop-filter:blur(8px)}
+  .request-modal.is-open{display:flex}
+  .request-dialog{position:relative;width:min(720px,100%);max-height:92vh;overflow:auto;background:#17191a;border:1px solid rgba(214,170,132,.35);box-shadow:0 24px 80px rgba(0,0,0,.55);padding:34px}
+  .request-close{position:absolute;top:12px;right:16px;width:38px;height:38px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#fff;font-size:27px;line-height:1;cursor:pointer}
+  .request-dialog h2{margin:0 42px 8px 0;font-size:34px;line-height:1.05}
+  .request-sub{margin:0 0 24px;color:rgba(255,255,255,.68);line-height:1.55}
+  .request-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .request-field{display:flex;flex-direction:column;gap:7px}
+  .request-field.full{grid-column:1/-1}
+  .request-field label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.58);font-weight:700}
+  .request-field input,.request-field select,.request-field textarea{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.16);background:#101213;color:#fff;padding:13px 14px;font:inherit;outline:none;border-radius:0}
+  .request-field input:focus,.request-field select:focus,.request-field textarea:focus{border-color:rgba(214,170,132,.8)}
+  .request-field textarea{min-height:120px;resize:vertical}
+  .request-field select option{background:#17191a;color:#fff}
+  .request-file{border:1px dashed rgba(214,170,132,.55)!important;padding:16px!important}
+  .request-file-note{font-size:12px;color:rgba(255,255,255,.5);line-height:1.45}
+  .request-consent{display:flex;align-items:flex-start;gap:10px;margin:16px 0;color:rgba(255,255,255,.6);font-size:12px;line-height:1.45}
+  .request-consent input{margin-top:3px;accent-color:#d6aa84}
+  .request-submit{width:100%;margin-top:4px;border:0;cursor:pointer}
+  .request-status{display:none;margin-top:16px;padding:14px 16px;border:1px solid rgba(120,190,130,.4);color:#dfeee1;background:rgba(80,130,90,.12);line-height:1.45}
+  .request-status.is-visible{display:block}
+  .request-error{display:none;margin-top:10px;color:#e7b5a8;font-size:13px}
+  .request-error.is-visible{display:block}
+  body.modal-open{overflow:hidden}
+  @media(max-width:620px){
+    .request-modal{padding:10px}
+    .request-dialog{padding:24px 18px;max-height:94vh}
+    .request-dialog h2{font-size:28px}
+    .request-grid{grid-template-columns:1fr}
+    .request-field.full{grid-column:auto}
+  }
+</style>
 </head>
 <body>
 <header class="header" id="top">
@@ -121,7 +156,7 @@
     <p class="hero-lead">Проектируем. Изготавливаем. Монтируем.</p>
     <p class="hero-copy">Каркасы, навесы, производственные конструкции и ограждения. Работаем с задачами, где важны расчёт, точность и реальный результат на объекте.</p>
     <div class="hero-actions">
-      <a class="btn btn-accent" href="tel:+79188939277">Заказать расчёт</a>
+      <a class="btn btn-accent" href="#request-modal" data-open-request>Заказать расчёт</a>
       <a class="btn btn-ghost" href="#projects">Смотреть проекты</a>
     </div>
   </div>
@@ -303,6 +338,86 @@
     </div>
   </div>
 </section>
+
+<!-- Request / quote form -->
+<div class="quote-modal" id="quote" aria-hidden="true">
+  <div class="quote-dialog" role="dialog" aria-modal="true" aria-labelledby="quote-title">
+    <button class="quote-close js-quote-close" type="button" aria-label="Закрыть">×</button>
+
+    <div class="eyebrow"><span></span> ЗАКАЗАТЬ РАСЧЁТ</div>
+    <h2 id="quote-title">Расскажите о задаче</h2>
+    <p class="quote-intro">Достаточно нескольких данных. Если есть фото, чертёж или эскиз, приложите их. Этого обычно хватает, чтобы быстро понять объём работ и связаться с вами.</p>
+
+    <form action="https://formsubmit.co/Steeldpr@ya.ru" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="Новая заявка на расчёт — Стальной контур">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://stalnoykontur.ru/?sent=1">
+      <input type="hidden" name="_url" value="https://stalnoykontur.ru/">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+
+      <div class="quote-grid">
+        <div class="quote-field">
+          <label for="q-name">Имя</label>
+          <input id="q-name" type="text" name="name" autocomplete="name" placeholder="Как к вам обращаться">
+        </div>
+
+        <div class="quote-field">
+          <label for="q-phone">Телефон <span class="quote-required">*</span></label>
+          <input id="q-phone" type="tel" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__" required>
+        </div>
+
+        <div class="quote-field">
+          <label for="q-type">Что нужно сделать</label>
+          <select id="q-type" name="Тип конструкции">
+            <option value="">Выберите вариант</option>
+            <option>Металлокаркас / металлоконструкция</option>
+            <option>Навес / каркас под кровлю</option>
+            <option>Ограждение / ворота / калитка</option>
+            <option>Лестница / площадка / перила</option>
+            <option>Другое / пока не знаю</option>
+          </select>
+        </div>
+
+        <div class="quote-field">
+          <label for="q-location">Где находится объект</label>
+          <input id="q-location" type="text" name="Адрес объекта" placeholder="Геленджик или другой населённый пункт">
+        </div>
+
+        <div class="quote-field">
+          <label for="q-size">Примерные размеры</label>
+          <input id="q-size" type="text" name="Размеры" placeholder="Например: 6 × 8 м">
+        </div>
+
+        <div class="quote-field">
+          <label for="q-deadline">Когда нужно</label>
+          <select id="q-deadline" name="Срок">
+            <option value="">Не определился</option>
+            <option>В ближайшее время</option>
+            <option>В течение месяца</option>
+            <option>Позже</option>
+          </select>
+        </div>
+
+        <div class="quote-field full">
+          <label for="q-message">Описание задачи <span class="quote-required">*</span></label>
+          <textarea id="q-message" name="message" placeholder="Что нужно изготовить, что уже есть на объекте, какие есть особенности или пожелания..." required></textarea>
+        </div>
+
+        <div class="quote-field full">
+          <label for="q-files">Фото, чертёж или эскиз</label>
+          <input id="q-files" type="file" name="attachment" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
+          <div class="quote-help">Можно прикрепить несколько файлов. Общий размер вложений не более 10 МБ.</div>
+        </div>
+      </div>
+
+      <div class="quote-actions">
+        <button class="btn btn-accent quote-submit" type="submit">Отправить заявку</button>
+        <div class="quote-privacy">Нажимая кнопку, вы соглашаетесь на обработку указанных данных для связи по вашей заявке.</div>
+      </div>
+    </form>
+  </div>
+</div>
+
 </main>
 
 <footer class="footer">
@@ -315,6 +430,155 @@
     <a href="tel:+79188939277">+7 918 893 92 77</a>
   </div>
 </footer>
+
+<div class="request-modal" id="request-modal" aria-hidden="true">
+  <div class="request-dialog" role="dialog" aria-modal="true" aria-labelledby="request-title">
+    <button class="request-close" type="button" aria-label="Закрыть" data-close-request>×</button>
+    <div class="eyebrow"><span></span> ЗАЯВКА НА РАСЧЁТ</div>
+    <h2 id="request-title">Расскажите о задаче</h2>
+    <p class="request-sub">Достаточно нескольких деталей. Если есть фото, чертёж или эскиз, приложите их, и мы сможем быстрее понять объём работ.</p>
+
+    <form id="request-form" action="https://formsubmit.co/RECEIVER_EMAIL" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="Новая заявка на расчёт — Стальной контур">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_url" value="https://stalnoykontur.ru/">
+
+      <div class="request-grid">
+        <div class="request-field">
+          <label for="request-name">Имя</label>
+          <input id="request-name" name="Имя" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+        </div>
+        <div class="request-field">
+          <label for="request-phone">Телефон *</label>
+          <input id="request-phone" name="Телефон" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___ __ __" required>
+        </div>
+        <div class="request-field">
+          <label for="request-type">Что нужно сделать</label>
+          <select id="request-type" name="Тип конструкции">
+            <option value="Не определился">Пока не определился</option>
+            <option>Металлокаркас</option>
+            <option>Навес / каркас</option>
+            <option>Производственная конструкция</option>
+            <option>Ограждение</option>
+            <option>Ворота / калитка</option>
+            <option>Лестница / площадка</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="request-field">
+          <label for="request-size">Примерные размеры</label>
+          <input id="request-size" name="Размеры" type="text" placeholder="Например: 6 × 8 м">
+        </div>
+        <div class="request-field">
+          <label for="request-location">Объект</label>
+          <input id="request-location" name="Объект" type="text" placeholder="Геленджик / район / адрес">
+        </div>
+        <div class="request-field">
+          <label for="request-deadline">Когда нужно</label>
+          <select id="request-deadline" name="Срок">
+            <option value="Не знаю">Не знаю</option>
+            <option>В ближайшее время</option>
+            <option>В течение месяца</option>
+            <option>Позже</option>
+          </select>
+        </div>
+        <div class="request-field full">
+          <label for="request-message">Описание задачи *</label>
+          <textarea id="request-message" name="Описание задачи" required placeholder="Что нужно сделать, что уже есть на объекте, какие требования или ограничения. Пишите своими словами."></textarea>
+        </div>
+        <div class="request-field full">
+          <label for="request-files">Фото, чертёж или эскиз</label>
+          <input class="request-file" id="request-files" name="Фото и чертежи" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
+          <div class="request-file-note">Можно прикрепить до 5 файлов. Желательно фото объекта, эскиз или чертёж. Суммарный размер до 10 МБ.</div>
+        </div>
+      </div>
+
+      <label class="request-consent">
+        <input type="checkbox" name="Согласие" value="Согласен на обработку данных для связи по заявке" required>
+        <span>Соглашаюсь на обработку предоставленных данных для связи по этой заявке.</span>
+      </label>
+
+      <button class="btn btn-accent request-submit" type="submit">ОТПРАВИТЬ ЗАЯВКУ</button>
+      <div class="request-error" id="request-error">Проверьте телефон и прикреплённые файлы. Максимум 5 файлов, общий размер до 10 МБ.</div>
+      <div class="request-status" id="request-status">Заявка отправлена. Мы получили данные и свяжемся с вами по указанному телефону.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal=document.getElementById('request-modal');
+  const form=document.getElementById('request-form');
+  const files=document.getElementById('request-files');
+  const error=document.getElementById('request-error');
+  const status=document.getElementById('request-status');
+  const open=()=>{modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');};
+  const close=()=>{modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');};
+  document.querySelectorAll('[data-open-request]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();open();}));
+  document.querySelectorAll('[data-close-request]').forEach(el=>el.addEventListener('click',close));
+  modal.addEventListener('click',e=>{if(e.target===modal)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('is-open'))close();});
+  form.addEventListener('submit',e=>{
+    error.classList.remove('is-visible');
+    const selected=[...files.files];
+    const total=selected.reduce((sum,f)=>sum+f.size,0);
+    if(selected.length>5 || total>10*1024*1024){e.preventDefault();error.classList.add('is-visible');return;}
+    const phone=document.getElementById('request-phone').value.replace(/[^0-9+]/g,'');
+    if(phone.replace(/\D/g,'').length<10){e.preventDefault();error.textContent='Укажите корректный номер телефона.';error.classList.add('is-visible');return;}
+    status.classList.remove('is-visible');
+  });
+})();
+</script>
 <script src="script.js"></script>
+
+<script>
+(function(){
+  const modal = document.getElementById('quote');
+  const openers = document.querySelectorAll('.js-quote-open');
+  const closeBtn = document.querySelector('.js-quote-close');
+
+  function openQuote(){
+    if(!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    const phone = document.getElementById('q-phone');
+    setTimeout(()=>phone && phone.focus(),80);
+  }
+  function closeQuote(){
+    if(!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+
+  openers.forEach(el=>el.addEventListener('click', function(e){
+    e.preventDefault(); openQuote();
+  }));
+  if(closeBtn) closeBtn.addEventListener('click', closeQuote);
+  if(modal) modal.addEventListener('click', e=>{ if(e.target===modal) closeQuote(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeQuote(); });
+
+  const params = new URLSearchParams(location.search);
+  if(params.get('sent') === '1'){
+    const old = document.querySelector('.quote-dialog');
+    if(old){
+      old.innerHTML =
+        '<button class="quote-close js-quote-close" type="button" aria-label="Закрыть">×</button>' +
+        '<div class="eyebrow"><span></span> ЗАЯВКА ОТПРАВЛЕНА</div>' +
+        '<h2>Спасибо. Заявка получена.</h2>' +
+        '<p class="quote-intro">Мы получили вашу заявку и свяжемся с вами по указанному телефону.</p>' +
+        '<button class="btn btn-accent js-quote-close" type="button">Закрыть</button>';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      old.querySelectorAll('.js-quote-close').forEach(el=>el.addEventListener('click',closeQuote));
+      history.replaceState({}, document.title, location.pathname);
+    }
+  }
+})();
+</script>
+
 </body>
 </html>
