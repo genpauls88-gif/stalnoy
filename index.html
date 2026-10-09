@@ -129,6 +129,21 @@
     .request-field.full{grid-column:auto}
   }
 </style>
+
+<style>
+  .contact-messengers{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .messenger-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:34px;padding:0 10px;border:1px solid rgba(255,255,255,.20);border-radius:7px;color:#fff;text-decoration:none;background:rgba(255,255,255,.04);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:.2s ease}
+  .messenger-link:hover{border-color:rgba(184,145,92,.8);color:#d0b07b;background:rgba(184,145,92,.08);transform:translateY(-1px)}
+  .messenger-link svg{width:17px;height:17px;fill:currentColor;flex:none}
+  .phone-contact-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+  .phone-contact-row .contact-messengers{margin-top:0}
+  .phone-top-wrap{display:flex;align-items:center;gap:10px}
+  .phone-top-wrap .contact-messengers{margin:0}
+  .phone-top-wrap .messenger-link{height:30px;padding:0 8px;font-size:10px}
+  .phone-top-wrap .messenger-link svg{width:15px;height:15px}
+  @media(max-width:900px){.phone-top-wrap .contact-messengers{display:none}}
+</style>
+
 </head>
 <body>
 <header class="header" id="top">
@@ -143,7 +158,18 @@
       <a href="#process">Как работаем</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <a class="phone-top" href="tel:+79188939277">+7 918 893 92 77</a>
+    <div class="phone-top-wrap">
+      <a class="phone-top" href="tel:+79188939277">+7 918 893 92 77</a>
+      <div class="contact-messengers" aria-label="Мессенджеры">
+        <a class="messenger-link" href="https://t.me/gen220v" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.4 18.5 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.7.9 12.1c-1.1-.3-1.1-1 .2-1.5L20.5 2.1c.9-.3 1.7.2 1.2 1.3Z"/></svg>
+          <span>Telegram</span>
+        </a>
+        <a class="messenger-link" href="https://max.ru/u/f9LHodD0cOLnGMbTSJimv5l9mWtvQz-FXAle3cQeG4wF5uis8QlxUJZk1Lc/" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX">
+          <span style="font-size:12px;font-weight:800;line-height:1">MAX</span>
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -333,7 +359,16 @@
       <p>Пришлите фото, размеры или чертёж. Рассчитаем конструкцию и обсудим решение.</p>
     </div>
     <div class="contact-action">
-      <a class="btn btn-accent btn-large" href="tel:+79188939277">+7 918 893 92 77</a>
+      <div class="phone-contact-row">
+        <a class="btn btn-accent btn-large" href="tel:+79188939277">+7 918 893 92 77</a>
+        <div class="contact-messengers" aria-label="Мессенджеры">
+          <a class="messenger-link" href="https://t.me/gen220v" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.4 18.5 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.7.9 12.1c-1.1-.3-1.1-1 .2-1.5L20.5 2.1c.9-.3 1.7.2 1.2 1.3Z"/></svg>
+            <span>Telegram</span>
+          </a>
+          <a class="messenger-link" href="https://max.ru/u/f9LHodD0cOLnGMbTSJimv5l9mWtvQz-FXAle3cQeG4wF5uis8QlxUJZk1Lc/" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX"><span style="font-size:12px;font-weight:800;line-height:1">MAX</span></a>
+        </div>
+      </div>
       <div class="contact-note">Стальной контур<br>Контур, который держит нагрузку.</div>
     </div>
   </div>
@@ -368,7 +403,7 @@
 
         <div class="quote-field">
           <label for="q-type">Что нужно сделать</label>
-          <select id="q-type" name="Тип конструкции">
+          <select id="q-type" name="construction">
             <option value="">Выберите вариант</option>
             <option>Металлокаркас / металлоконструкция</option>
             <option>Навес / каркас под кровлю</option>
@@ -390,7 +425,7 @@
 
         <div class="quote-field">
           <label for="q-deadline">Когда нужно</label>
-          <select id="q-deadline" name="Срок">
+          <select id="q-deadline" name="deadline">
             <option value="">Не определился</option>
             <option>В ближайшее время</option>
             <option>В течение месяца</option>
@@ -438,24 +473,20 @@
     <h2 id="request-title">Расскажите о задаче</h2>
     <p class="request-sub">Достаточно нескольких деталей. Если есть фото, чертёж или эскиз, приложите их, и мы сможем быстрее понять объём работ.</p>
 
-    <form id="request-form" action="https://formsubmit.co/RECEIVER_EMAIL" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="_subject" value="Новая заявка на расчёт — Стальной контур">
-      <input type="hidden" name="_captcha" value="true">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_url" value="https://stalnoykontur.ru/">
+    <form id="request-form" action="https://api.stalnoykontur.ru" method="POST" enctype="multipart/form-data">
 
       <div class="request-grid">
         <div class="request-field">
           <label for="request-name">Имя</label>
-          <input id="request-name" name="Имя" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+          <input id="request-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
         </div>
         <div class="request-field">
           <label for="request-phone">Телефон *</label>
-          <input id="request-phone" name="Телефон" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___ __ __" required>
+          <input id="request-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___ __ __" required>
         </div>
         <div class="request-field">
           <label for="request-type">Что нужно сделать</label>
-          <select id="request-type" name="Тип конструкции">
+          <select id="request-type" name="construction">
             <option value="Не определился">Пока не определился</option>
             <option>Металлокаркас</option>
             <option>Навес / каркас</option>
@@ -468,15 +499,15 @@
         </div>
         <div class="request-field">
           <label for="request-size">Примерные размеры</label>
-          <input id="request-size" name="Размеры" type="text" placeholder="Например: 6 × 8 м">
+          <input id="request-size" name="dimensions" type="text" placeholder="Например: 6 × 8 м">
         </div>
         <div class="request-field">
           <label for="request-location">Объект</label>
-          <input id="request-location" name="Объект" type="text" placeholder="Геленджик / район / адрес">
+          <input id="request-location" name="address" type="text" placeholder="Геленджик / район / адрес">
         </div>
         <div class="request-field">
           <label for="request-deadline">Когда нужно</label>
-          <select id="request-deadline" name="Срок">
+          <select id="request-deadline" name="deadline">
             <option value="Не знаю">Не знаю</option>
             <option>В ближайшее время</option>
             <option>В течение месяца</option>
@@ -485,17 +516,17 @@
         </div>
         <div class="request-field full">
           <label for="request-message">Описание задачи *</label>
-          <textarea id="request-message" name="Описание задачи" required placeholder="Что нужно сделать, что уже есть на объекте, какие требования или ограничения. Пишите своими словами."></textarea>
+          <textarea id="request-message" name="description" required placeholder="Что нужно сделать, что уже есть на объекте, какие требования или ограничения. Пишите своими словами."></textarea>
         </div>
         <div class="request-field full">
           <label for="request-files">Фото, чертёж или эскиз</label>
-          <input class="request-file" id="request-files" name="Фото и чертежи" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
+          <input class="request-file" id="request-files" name="attachment" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
           <div class="request-file-note">Можно прикрепить до 5 файлов. Желательно фото объекта, эскиз или чертёж. Суммарный размер до 10 МБ.</div>
         </div>
       </div>
 
       <label class="request-consent">
-        <input type="checkbox" name="Согласие" value="Согласен на обработку данных для связи по заявке" required>
+        <input type="checkbox" name="consent" value="Согласен на обработку данных для связи по заявке" required>
         <span>Соглашаюсь на обработку предоставленных данных для связи по этой заявке.</span>
       </label>
 
@@ -519,14 +550,33 @@
   document.querySelectorAll('[data-close-request]').forEach(el=>el.addEventListener('click',close));
   modal.addEventListener('click',e=>{if(e.target===modal)close();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('is-open'))close();});
-  form.addEventListener('submit',e=>{
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
     error.classList.remove('is-visible');
+    status.classList.remove('is-visible');
+    const submit=form.querySelector('[type=submit]');
     const selected=[...files.files];
     const total=selected.reduce((sum,f)=>sum+f.size,0);
-    if(selected.length>5 || total>10*1024*1024){e.preventDefault();error.classList.add('is-visible');return;}
+    if(selected.length>5 || total>10*1024*1024){error.textContent='Максимум 5 файлов, общий размер до 10 МБ.';error.classList.add('is-visible');return;}
     const phone=document.getElementById('request-phone').value.replace(/[^0-9+]/g,'');
-    if(phone.replace(/\D/g,'').length<10){e.preventDefault();error.textContent='Укажите корректный номер телефона.';error.classList.add('is-visible');return;}
-    status.classList.remove('is-visible');
+    if(phone.replace(/\D/g,'').length<10){error.textContent='Укажите корректный номер телефона.';error.classList.add('is-visible');return;}
+    submit.disabled=true;
+    const originalText=submit.textContent;
+    submit.textContent='ОТПРАВЛЯЕМ…';
+    try{
+      const response=await fetch('https://api.stalnoykontur.ru',{method:'POST',body:new FormData(form)});
+      const result=await response.json().catch(()=>({ok:false}));
+      if(!response.ok || !result.ok) throw new Error('Не удалось отправить заявку');
+      status.textContent='Заявка отправлена в Telegram. Мы свяжемся с вами по указанному телефону.';
+      status.classList.add('is-visible');
+      form.reset();
+    }catch(err){
+      error.textContent='Не удалось отправить заявку. Проверьте подключение и попробуйте ещё раз. Если ошибка повторится, позвоните нам.';
+      error.classList.add('is-visible');
+    }finally{
+      submit.disabled=false;
+      submit.textContent=originalText;
+    }
   });
 })();
 </script>
