@@ -374,84 +374,6 @@
   </div>
 </section>
 
-<!-- Request / quote form -->
-<div class="quote-modal" id="quote" aria-hidden="true">
-  <div class="quote-dialog" role="dialog" aria-modal="true" aria-labelledby="quote-title">
-    <button class="quote-close js-quote-close" type="button" aria-label="Закрыть">×</button>
-
-    <div class="eyebrow"><span></span> ЗАКАЗАТЬ РАСЧЁТ</div>
-    <h2 id="quote-title">Расскажите о задаче</h2>
-    <p class="quote-intro">Достаточно нескольких данных. Если есть фото, чертёж или эскиз, приложите их. Этого обычно хватает, чтобы быстро понять объём работ и связаться с вами.</p>
-
-    <form action="https://formsubmit.co/Steeldpr@ya.ru" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="_subject" value="Новая заявка на расчёт — Стальной контур">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_next" value="https://stalnoykontur.ru/?sent=1">
-      <input type="hidden" name="_url" value="https://stalnoykontur.ru/">
-      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
-
-      <div class="quote-grid">
-        <div class="quote-field">
-          <label for="q-name">Имя</label>
-          <input id="q-name" type="text" name="name" autocomplete="name" placeholder="Как к вам обращаться">
-        </div>
-
-        <div class="quote-field">
-          <label for="q-phone">Телефон <span class="quote-required">*</span></label>
-          <input id="q-phone" type="tel" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__" required>
-        </div>
-
-        <div class="quote-field">
-          <label for="q-type">Что нужно сделать</label>
-          <select id="q-type" name="construction">
-            <option value="">Выберите вариант</option>
-            <option>Металлокаркас / металлоконструкция</option>
-            <option>Навес / каркас под кровлю</option>
-            <option>Ограждение / ворота / калитка</option>
-            <option>Лестница / площадка / перила</option>
-            <option>Другое / пока не знаю</option>
-          </select>
-        </div>
-
-        <div class="quote-field">
-          <label for="q-location">Где находится объект</label>
-          <input id="q-location" type="text" name="Адрес объекта" placeholder="Геленджик или другой населённый пункт">
-        </div>
-
-        <div class="quote-field">
-          <label for="q-size">Примерные размеры</label>
-          <input id="q-size" type="text" name="Размеры" placeholder="Например: 6 × 8 м">
-        </div>
-
-        <div class="quote-field">
-          <label for="q-deadline">Когда нужно</label>
-          <select id="q-deadline" name="deadline">
-            <option value="">Не определился</option>
-            <option>В ближайшее время</option>
-            <option>В течение месяца</option>
-            <option>Позже</option>
-          </select>
-        </div>
-
-        <div class="quote-field full">
-          <label for="q-message">Описание задачи <span class="quote-required">*</span></label>
-          <textarea id="q-message" name="message" placeholder="Что нужно изготовить, что уже есть на объекте, какие есть особенности или пожелания..." required></textarea>
-        </div>
-
-        <div class="quote-field full">
-          <label for="q-files">Фото, чертёж или эскиз</label>
-          <input id="q-files" type="file" name="attachment" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
-          <div class="quote-help">Можно прикрепить несколько файлов. Общий размер вложений не более 10 МБ.</div>
-        </div>
-      </div>
-
-      <div class="quote-actions">
-        <button class="btn btn-accent quote-submit" type="submit">Отправить заявку</button>
-        <div class="quote-privacy">Нажимая кнопку, вы соглашаетесь на обработку указанных данных для связи по вашей заявке.</div>
-      </div>
-    </form>
-  </div>
-</div>
 
 </main>
 
@@ -582,53 +504,7 @@
 </script>
 <script src="script.js"></script>
 
-<script>
-(function(){
-  const modal = document.getElementById('quote');
-  const openers = document.querySelectorAll('.js-quote-open');
-  const closeBtn = document.querySelector('.js-quote-close');
 
-  function openQuote(){
-    if(!modal) return;
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    const phone = document.getElementById('q-phone');
-    setTimeout(()=>phone && phone.focus(),80);
-  }
-  function closeQuote(){
-    if(!modal) return;
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden','true');
-    document.body.style.overflow='';
-  }
-
-  openers.forEach(el=>el.addEventListener('click', function(e){
-    e.preventDefault(); openQuote();
-  }));
-  if(closeBtn) closeBtn.addEventListener('click', closeQuote);
-  if(modal) modal.addEventListener('click', e=>{ if(e.target===modal) closeQuote(); });
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeQuote(); });
-
-  const params = new URLSearchParams(location.search);
-  if(params.get('sent') === '1'){
-    const old = document.querySelector('.quote-dialog');
-    if(old){
-      old.innerHTML =
-        '<button class="quote-close js-quote-close" type="button" aria-label="Закрыть">×</button>' +
-        '<div class="eyebrow"><span></span> ЗАЯВКА ОТПРАВЛЕНА</div>' +
-        '<h2>Спасибо. Заявка получена.</h2>' +
-        '<p class="quote-intro">Мы получили вашу заявку и свяжемся с вами по указанному телефону.</p>' +
-        '<button class="btn btn-accent js-quote-close" type="button">Закрыть</button>';
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-      old.querySelectorAll('.js-quote-close').forEach(el=>el.addEventListener('click',closeQuote));
-      history.replaceState({}, document.title, location.pathname);
-    }
-  }
-})();
-</script>
 
 </body>
 </html>
